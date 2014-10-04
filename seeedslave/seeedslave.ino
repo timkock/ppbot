@@ -17,7 +17,6 @@ const int RIGHT    = 4;
 
 void setup() {
   
-  
   // Motor A
   pinMode(MOTORA, OUTPUT); // Motor Channel A
   pinMode(BREAKA, OUTPUT); // Break Channel A
@@ -80,14 +79,13 @@ void receiveEvent(int howMany) {
   Serial.println(x);
   switch (x) {
     case 0:
+      Serial.println("FORWARD");
       goForward(500);
       break;
     case 1:
+      Serial.println("BACKWARD");
       goBack(500);
       break;
-    default: 
-      // if nothing else matches, do the default
-      // default is optional
   }
 }
 

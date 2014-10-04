@@ -13,10 +13,10 @@ AndeeHelper btnRight;
 AndeeHelper btnBack;
 
 // COMMANDS
-const int FORWARD  = 0;
-const int BACKWARD = 1;
-const int LEFT     = 2;
-const int RIGHT    = 4;
+const byte FORWARD  = 0;
+const byte BACKWARD = 1;
+const byte LEFT     = 2;
+const byte RIGHT    = 4;
 
 void setup() {
   
