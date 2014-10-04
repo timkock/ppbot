@@ -74,20 +74,23 @@ void goBack(int dist) {
     digitalWrite(BREAKB, HIGH); // engage the Brake for Channel B  
 }
 
+int dir = -1;
 void receiveEvent(int howMany) {
-  int x = Wire.read();
-  Serial.println(x);
-  switch (x) {
+  dir = Wire.read();
+}
+
+void loop() {
+    switch (dir) {
     case 0:
       Serial.println("FORWARD");
       goForward(500);
+      dir = -1;
       break;
     case 1:
       Serial.println("BACKWARD");
       goBack(500);
+      dir = -1;
       break;
   }
 }
 
-void loop() {
-}
