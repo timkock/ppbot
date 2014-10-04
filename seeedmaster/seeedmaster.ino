@@ -9,11 +9,13 @@ AndeeHelper btnLeft;
 AndeeHelper btnRight;
 AndeeHelper btnBack;
 
+// COMMANDS
+const String FORWARD  = "FORWARD\n";
+const String BACKWARD = "BACKWARD\n";
+const String LEFT     = "LEFT\n";
+const String RIGHT    = "RIGHT\n";
+
 void setup() {
-  
-  // Init Serial
-  Serial.begin(115200);
-  Wire.begin(4);
   
   // Initialize Andee
   Andee.begin();
@@ -26,9 +28,11 @@ void setup() {
   btnRight.update();
   btnBack.update();  
   
+  // Init Wire & Serial
+  Wire.begin(4);
+  Serial.begin(115200);
+  
 }
-
-byte x = 0;
 
 void initAndee() {
   
@@ -58,42 +62,41 @@ void initAndee() {
   
 }
 
+void sendCmd(String cmd) {
+  Serial.print("Sending: ");
+  Serial.print(cmd);
+  Serial.println();
+  Wire.beginTransmission(4); // transmit to device #4
+  for (int i = 0; i < sizeof(cmd) - 1; i++){
+    Wire.write(cmd[i]);
+  }
+  Wire.endTransmission();    // stop transmitting
+}
+
 void loop() {
-  
-    Wire.beginTransmission(4); // transmit to device #4
-    Wire.write("x is ");        // sends five bytes
-    Wire.write(x);              // sends one byte  
-    Wire.endTransmission();    // stop transmitting
-    
-    x++;
-    delay(500);
-/*  
+ 
    // FORWARD
    if(btnForward.isPressed()) {
      btnForward.ack();
-     // TODO:OUTSLAVE
-     Serial.println("forward");
+     sendCmd(FORWARD);
    }
    
    // BACKWARD
    if(btnBack.isPressed()) {
      btnBack.ack();
-     // TODO:OUTSLAVE
-     Serial.println("backward");
+     sendCmd(BACKWARD);
    }
    
    // LEFT
    if(btnLeft.isPressed()) {
      btnLeft.ack();
-     // TODO:OUTSLAVE
-     Serial.println("left");
+     sendCmd(LEFT);
    }
    
     // RIGHT
    if(btnRight.isPressed()) {
      btnRight.ack();
-     // TODO:OUTSLAVE
-     Serial.println("right");
+     sendCmd(RIGHT);
    }
-*/
+   
 }

@@ -9,10 +9,14 @@ const int MOTORB = 13;
 const int BREAKB = 8;
 const int SPEEDB = 11;
 
+// COMMANDS
+const String FORWARD  = "FORWARD";
+const String BACKWARD = "BACKWARD";
+const String LEFT     = "LEFT";
+const String RIGHT    = "RIGHT";
+
 void setup() {
   
-  // Init Serial
-  Serial.begin(115200);
   
   // Motor A
   pinMode(MOTORA, OUTPUT); // Motor Channel A
@@ -32,6 +36,9 @@ void setup() {
   Wire.begin(4);                // join i2c bus with address #4
   Wire.onReceive(receiveEvent); // register event
   
+  // Init Serial
+  Serial.begin(115200);
+ 
 }
 
 void goForward(int dist) {
@@ -74,40 +81,7 @@ void receiveEvent(int howMany) {
     char c = Wire.read(); // receive byte as a character
     Serial.print(c);         // print the character
   }
-  int x = Wire.read();    // receive byte as an integer
-  Serial.println(x);         // print the integer
 }
 
 void loop() {
-   delay(100);
-   Serial.println("reading...");
-  
-/*
-   // FORWARD
-   if(btnForward.isPressed()) {
-     btnForward.ack();
-     goForward(500);
-     Serial.println("forward");
-   }
-   
-   // BACKWARD
-   if(btnBack.isPressed()) {
-     btnBack.ack();
-     goBack(500);
-     Serial.println("backward");
-   }
-   
-   // LEFT
-   if(btnLeft.isPressed()) {
-     btnLeft.ack();
-     Serial.println("left");
-   }
-   
-    // RIGHT
-   if(btnRight.isPressed()) {
-     btnRight.ack();
-     Serial.println("right");
-   }
-*/
-   
 }
