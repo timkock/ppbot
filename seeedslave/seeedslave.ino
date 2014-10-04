@@ -10,10 +10,10 @@ const int BREAKB = 8;
 const int SPEEDB = 11;
 
 // COMMANDS
-const String FORWARD  = "FORWARD";
-const String BACKWARD = "BACKWARD";
-const String LEFT     = "LEFT";
-const String RIGHT    = "RIGHT";
+const int FORWARD  = 0;
+const int BACKWARD = 1;
+const int LEFT     = 2;
+const int RIGHT    = 4;
 
 void setup() {
   
@@ -76,10 +76,18 @@ void goBack(int dist) {
 }
 
 void receiveEvent(int howMany) {
-  while(1 < Wire.available()) // loop through all but the last
-  {
-    char c = Wire.read(); // receive byte as a character
-    Serial.print(c);         // print the character
+  int x = Wire.read();
+  Serial.println(x);
+  switch (x) {
+    case 0:
+      goForward(500);
+      break;
+    case 1:
+      goBack(500);
+      break;
+    default: 
+      // if nothing else matches, do the default
+      // default is optional
   }
 }
 

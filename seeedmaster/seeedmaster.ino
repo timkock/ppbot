@@ -3,6 +3,9 @@
 #include <Andee.h>
 #include <Wire.h>
 
+// DEBUG
+String vStr = "0.1.2";
+
 // interface buttons
 AndeeHelper btnForward;
 AndeeHelper btnLeft;
@@ -10,10 +13,10 @@ AndeeHelper btnRight;
 AndeeHelper btnBack;
 
 // COMMANDS
-const String FORWARD  = "FORWARD\n";
-const String BACKWARD = "BACKWARD\n";
-const String LEFT     = "LEFT\n";
-const String RIGHT    = "RIGHT\n";
+const int FORWARD  = 0;
+const int BACKWARD = 1;
+const int LEFT     = 2;
+const int RIGHT    = 4;
 
 void setup() {
   
@@ -31,6 +34,7 @@ void setup() {
   // Init Wire & Serial
   Wire.begin(4);
   Serial.begin(115200);
+  Serial.println(vStr);
   
 }
 
@@ -62,15 +66,19 @@ void initAndee() {
   
 }
 
-void sendCmd(String cmd) {
+void sendCmd(int cmd) {
+  
+  // debug output
   Serial.print("Sending: ");
   Serial.print(cmd);
   Serial.println();
-  Wire.beginTransmission(4); // transmit to device #4
-  for (int i = 0; i < sizeof(cmd) - 1; i++){
-    Wire.write(cmd[i]);
-  }
-  Wire.endTransmission();    // stop transmitting
+  
+  // wire command
+  Wire.beginTransmission(4);
+  Wire.write(cmd);
+  Wire.endTransmission();
+  delay(10);
+  
 }
 
 void loop() {
